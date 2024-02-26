@@ -68,11 +68,27 @@ unsafe fn fastfall_specials(fighter: &mut L2CFighterCommon) {
     }
 }
 
+//Allows you to cancel out of Shulk's down tilt
+unsafe fn down_tilt_cancel(fighter: &mut L2CFighterCommon){
+    //Checks if the attack is a down tilt
+    if(MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_lw3")){
+        //Checks if the frame is between the jump-canceleable window
+        if(MotionModule::frame(fighter.module_accessor) >= 15.0 && MotionModule::frame(fighter.module_accessor) < 31.0){
+            //Checks for whether the play jumped
+            if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP){
+                //Jump button!
+                fighter.change_status(FIGHTER_STATUS_KIND_JUMP.into(), false.into());
+            }
+        }
+    }
+}
+
 pub unsafe fn moveset(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectModuleAccessor, id: usize, cat: [i32 ; 4], status_kind: i32, situation_kind: i32, motion_kind: u64, stick_x: f32, stick_y: f32, facing: f32, frame: f32) {
     // Magic Series
     air_slash_cancels(boma, id, status_kind, cat[0], frame);
     up_special_proper_landing(fighter);
     fastfall_specials(fighter);
+    down_tilt_cancel(fighter);
 }
 
 pub extern "C" fn shulk_frame_wrapper(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
