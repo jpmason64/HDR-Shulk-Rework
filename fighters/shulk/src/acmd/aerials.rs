@@ -244,9 +244,14 @@ pub unsafe fn notify_log_event_collision_hit_replace(fighter_manager: *mut smash
     let attacker = utils::util::get_battle_object_from_accessor(attacker_boma);
     // if search_hit flag is on
     if WorkModule::is_flag(attacker_boma, SHULK_AERIAL_HIT) {
-        // add velocity
+        //For no reason, this line changes Shulk into a bullet bill.
         // StatusModule::change_status_request_from_script(attacker_boma, *SHULK_ST_MONAD_SPEED_UNABLE, true);
-        MeterModule::add(attacker,20.0);
+        VarModule::set_float(attacker,0,100.0);
+        println!("Monado Jump Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_JUMP));
+        println!("Monado Speed Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SPEED));
+        println!("Monado Shield Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SHIELD));
+        println!("Monado Buster Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_BUSTER));
+        println!("Monado Smash Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SMASH));
         // disable flag
         WorkModule::off_flag(attacker_boma, SHULK_AERIAL_HIT);
     }
