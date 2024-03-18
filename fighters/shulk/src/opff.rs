@@ -3,6 +3,7 @@ utils::import_noreturn!(common::opff::fighter_common_opff);
 use super::*;
 use globals::*;
 
+const SHULK_AERIAL_HIT : i32 = 0x200000ea;
  
 unsafe fn air_slash_cancels(boma: &mut BattleObjectModuleAccessor, id: usize, status_kind: i32, cat1: i32, frame: f32) {
     if StatusModule::is_changing(boma) {
@@ -74,7 +75,7 @@ unsafe fn down_tilt_cancel(fighter: &mut L2CFighterCommon){
     if(MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_lw3")){
         //Checks if the frame is between the jump-canceleable window
         if(MotionModule::frame(fighter.module_accessor) >= 15.0 && MotionModule::frame(fighter.module_accessor) < 31.0){
-            //Checks for whether the play jumped
+            //Checks for whether the player jumped
             if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP){
                 //Jump button!
                 fighter.change_status(FIGHTER_STATUS_KIND_JUMP.into(), false.into());
@@ -101,6 +102,9 @@ pub extern "C" fn shulk_frame_wrapper(fighter: &mut smash::lua2cpp::L2CFighterCo
 pub unsafe fn shulk_frame(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
     if let Some(info) = FrameInfo::update_and_get(fighter) {
         moveset(fighter, &mut *info.boma, info.id, info.cat, info.status_kind, info.situation_kind, info.motion_kind.hash, info.stick_x, info.stick_y, info.facing, info.frame);
+    }
+    if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_air_f") {
+        WorkModule::off_flag(fighter.module_accessor, SHULK_AERIAL_HIT);
     }
 }
 pub fn install() {
