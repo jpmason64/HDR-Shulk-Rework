@@ -6,6 +6,7 @@ use skyline::libc::*;
 
 static mut NOTIFY_LOG_EVENT_COLLISION_HIT_OFFSET : usize = 0x67A20;
 const SHULK_AERIAL_HIT : i32 = 0x200000ea;
+const UNAVAILABLE_REDUCTION_FACTOR: f32 = 0.2;
 
 unsafe extern "C" fn shulk_attack_air_n_game(fighter: &mut L2CAgentBase) {
     let lua_state = fighter.lua_state_agent;
@@ -246,12 +247,35 @@ pub unsafe fn notify_log_event_collision_hit_replace(fighter_manager: *mut smash
     if WorkModule::is_flag(attacker_boma, SHULK_AERIAL_HIT) {
         //For no reason, this line changes Shulk into a bullet bill.
         // StatusModule::change_status_request_from_script(attacker_boma, *SHULK_ST_MONAD_SPEED_UNABLE, true);
-        VarModule::set_float(attacker,0,100.0);
-        println!("Monado Jump Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_JUMP));
-        println!("Monado Speed Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SPEED));
+        // println!("Monado Jump Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_JUMP));
+        // println!("Monado Speed Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SPEED));
         println!("Monado Shield Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SHIELD));
-        println!("Monado Buster Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_BUSTER));
-        println!("Monado Smash Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SMASH));
+        // println!("Monado Buster Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_BUSTER));
+        // println!("Monado Smash Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SMASH));
+        let jump_unavailable = WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_JUMP);
+        let speed_unavailable = WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SPEED);
+        let shield_unavailable = WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SHIELD);
+        let buster_unavailable = WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_BUSTER);
+        let smash_unavailable = WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SMASH);
+        if(jump_unavailable != 0){
+            WorkModule::set_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_JUMP, get_post_collision_unavailable_frames(jump_unavailable));
+        }
+        if(speed_unavailable != 0){
+            WorkModule::set_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SPEED, get_post_collision_unavailable_frames(speed_unavailable));
+        }
+        if(shield_unavailable != 0){
+            let x = get_post_collision_unavailable_frames(shield_unavailable) as f32;
+            println!("New Frame: {}", x);
+            // WorkModule::set_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SHIELD, x);
+            VarModule::set_float(attacker, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SHIELD, x);
+        }
+        if(buster_unavailable != 0){
+            WorkModule::set_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_BUSTER, get_post_collision_unavailable_frames(buster_unavailable));
+        }
+        if(smash_unavailable != 0){
+            WorkModule::set_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SMASH, get_post_collision_unavailable_frames(smash_unavailable));
+        }
+        println!("Monado Shield Unavailable Frame {}", WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SHIELD));
         // disable flag
         WorkModule::off_flag(attacker_boma, SHULK_AERIAL_HIT);
     }
@@ -259,6 +283,13 @@ pub unsafe fn notify_log_event_collision_hit_replace(fighter_manager: *mut smash
     original!()(fighter_manager, attacker_id, defender_id, move_type, arg5, move_type_again, fighter)
 }
 
+//
+fn get_post_collision_unavailable_frames(current_frames: i32) -> i32{
+    let current_float = current_frames as f32;
+    let res = current_float - current_float * UNAVAILABLE_REDUCTION_FACTOR;
+    // println!("New Frame: {}", res as i32);
+    return res as i32;
+}
 
 fn find_subsequence(haystack: &[u8], needle: &[u8]) -> Option<usize> {
     haystack.windows(needle.len()).position(|window| window == needle)
