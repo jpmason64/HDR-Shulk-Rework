@@ -4,6 +4,10 @@ use super::*;
 use globals::*;
 
 const SHULK_AERIAL_HIT : i32 = 0x200000ea;
+const SHULK_GROUND_HIT : i32 = 0x200000eb;
+const SHULK_THROW_HIT : i32 = 0x200000ec;
+const SHULK_SMASHES_HIT : i32 = 0x200000ed;
+const SHULK_TILTS_HIT : i32 = 0x200000ee;
  
 unsafe fn air_slash_cancels(boma: &mut BattleObjectModuleAccessor, id: usize, status_kind: i32, cat1: i32, frame: f32) {
     if StatusModule::is_changing(boma) {
@@ -103,9 +107,75 @@ pub unsafe fn shulk_frame(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
     if let Some(info) = FrameInfo::update_and_get(fighter) {
         moveset(fighter, &mut *info.boma, info.id, info.cat, info.status_kind, info.situation_kind, info.motion_kind.hash, info.stick_x, info.stick_y, info.facing, info.frame);
     }
-    if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_air_f") {
-        WorkModule::off_flag(fighter.module_accessor, SHULK_AERIAL_HIT);
-    }
+    //Aerials
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_air_f") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_AERIAL_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_air_b") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_AERIAL_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_air_hi") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_AERIAL_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_air_lw") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_AERIAL_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_air_n") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_AERIAL_HIT);
+    // }
+    // //Ground Attacks
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_13") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_GROUND_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_dash") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_GROUND_HIT);
+    // }
+    // //Smash Attacks
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_s4") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_SMASHES_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_s4_hi") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_SMASHES_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_s4_lw") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_SMASHES_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_hi_4") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_SMASHES_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_lw_4") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_SMASHES_HIT);
+    // }
+    // //Throws
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("throw_f") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_THROW_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("throw_b") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_THROW_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("throw_hi") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_THROW_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("throw_lw") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_THROW_HIT);
+    // }
+    // //Tilt Attacks
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_s3") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_TILTS_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_s3_hi") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_TILTS_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_s3_lw") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_TILTS_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_lw_3") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_TILTS_HIT);
+    // }
+    // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_hi_3") {
+    //     WorkModule::off_flag(fighter.module_accessor, SHULK_TILTS_HIT);
+    // }
+
 }
 pub fn install() {
     smashline::Agent::new("shulk")
