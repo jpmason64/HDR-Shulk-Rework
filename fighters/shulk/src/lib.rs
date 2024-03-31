@@ -7,6 +7,8 @@ pub mod acmd;
 //pub mod status;
 pub mod opff;
 
+pub mod vtable_hook;
+
 use smash::{
     lib::{
         L2CValue,
@@ -39,6 +41,8 @@ use utils::{
 use smashline::*;
 
 pub fn install() {
+    let agent = &mut Agent::new("shulk");
     acmd::install();
     opff::install();
+    vtable_hook::install(agent);
 }

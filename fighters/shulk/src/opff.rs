@@ -88,12 +88,31 @@ unsafe fn down_tilt_cancel(fighter: &mut L2CFighterCommon){
     }
 }
 
+unsafe fn arts_cancelling(fighter: &mut L2CFighterCommon, status_kind: i32) {
+    if fighter.is_motion_one_of(&[
+        Hash40::new("attack_13"),
+        Hash40::new("attack_s3_s"),
+        Hash40::new("attack_hi3"),
+        Hash40::new("attack_lw3"),
+        Hash40::new("attack_air_n"),
+        Hash40::new("attack_air_f"),
+        Hash40::new("attack_air_b"),
+        Hash40::new("attack_air_hi"),
+        Hash40::new("attack_air_lw") ]) {
+        if AttackModule::is_infliction_status(fighter.module_accessor, *COLLISION_KIND_MASK_HIT | *COLLISION_KIND_MASK_SHIELD) {
+            println!("beat");
+            VarModule::on_flag(fighter.object(), vars::shulk::status::MONADO_BEAT);
+        }
+    }
+}
+
 pub unsafe fn moveset(fighter: &mut L2CFighterCommon, boma: &mut BattleObjectModuleAccessor, id: usize, cat: [i32 ; 4], status_kind: i32, situation_kind: i32, motion_kind: u64, stick_x: f32, stick_y: f32, facing: f32, frame: f32) {
     // Magic Series
     air_slash_cancels(boma, id, status_kind, cat[0], frame);
     up_special_proper_landing(fighter);
     fastfall_specials(fighter);
     down_tilt_cancel(fighter);
+    arts_cancelling(fighter, status_kind);
 }
 
 pub extern "C" fn shulk_frame_wrapper(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
