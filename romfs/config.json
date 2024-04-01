@@ -117,6 +117,10 @@
 		],
 		"fighter/ken/cmn": [
 			"fighter/ken/param/hdr.xml"
+		],
+		"fighter/shulk/c00":[
+			"fighter/shulk/motion/body/c00/c01attacks3hi.nuanmb",
+			"fighter/shulk/motion/body/c00/c01attacks3lw.nuanmb"
 		]
 	}
 }
