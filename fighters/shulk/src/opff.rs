@@ -128,6 +128,15 @@ pub unsafe fn shulk_frame(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
     if let Some(info) = FrameInfo::update_and_get(fighter) {
         moveset(fighter, &mut *info.boma, info.id, info.cat, info.status_kind, info.situation_kind, info.motion_kind.hash, info.stick_x, info.stick_y, info.facing, info.frame);
     }
+
+    // if fighter.is_motion_one_of(&[
+    //     Hash40::new("attack_s3_s"),
+    //     Hash40::new("attack_s3_hi"),
+    //     Hash40::new("attack_s3_lw"),]){
+    //         ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), false);
+    //         ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), true);
+    // }
+
     //Aerials
     // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_air_f") {
     //     WorkModule::off_flag(fighter.module_accessor, SHULK_AERIAL_HIT);
