@@ -78,6 +78,8 @@ attack_s3_hi:
       unk: 1
   scripts:
     - expression_attacks3hi
+    - sound_attacks3lw
+    - effect_attacks3lw
 attack_s3_lw:
   game_script: game_attacks3lw
   flags:
@@ -106,6 +108,8 @@ attack_s3_lw:
       unk: 1
   scripts:
     - expression_attacks3lw
+    - sound_attacks3lw
+    - effect_attacks3lw
 attack_s4_hi:
   extra:
     cancel_frame: 72
