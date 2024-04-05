@@ -8,6 +8,8 @@ const SHULK_GROUND_HIT : i32 = 0x200000eb;
 const SHULK_THROW_HIT : i32 = 0x200000ec;
 const SHULK_SMASHES_HIT : i32 = 0x200000ed;
 const SHULK_TILTS_HIT : i32 = 0x200000ee;
+
+static mut TILT: bool = false;
  
 unsafe fn air_slash_cancels(boma: &mut BattleObjectModuleAccessor, id: usize, status_kind: i32, cat1: i32, frame: f32) {
     if StatusModule::is_changing(boma) {
@@ -129,13 +131,39 @@ pub unsafe fn shulk_frame(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
         moveset(fighter, &mut *info.boma, info.id, info.cat, info.status_kind, info.situation_kind, info.motion_kind.hash, info.stick_x, info.stick_y, info.facing, info.frame);
     }
 
-    // if fighter.is_motion_one_of(&[
-    //     Hash40::new("attack_s3_s"),
-    //     Hash40::new("attack_s3_hi"),
-    //     Hash40::new("attack_s3_lw"),]){
-    //         ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), false);
-    //         ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), true);
-    // }
+    if fighter.is_motion_one_of(&[
+        Hash40::new("attack_s3_s"),
+        Hash40::new("attack_s3_hi"),
+        Hash40::new("attack_s3_lw"),]){
+            TILT = true;
+            ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), false);
+            ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), true);
+    }
+
+    if fighter.is_motion_one_of(&[
+        Hash40::new("jump_squat"),
+        Hash40::new("run"),
+        Hash40::new("run_start"),
+        Hash40::new("turn"),
+        Hash40::new("turn_dash"),
+        Hash40::new("dash"),
+        Hash40::new("dash_b"),
+        Hash40::new("dash_b_run"),
+        Hash40::new("wait"),
+        Hash40::new("wait_2"),
+        Hash40::new("wait_3"),
+        Hash40::new("wait_4"),
+        Hash40::new("wait_5"),
+        Hash40::new("walk_slow"),
+        Hash40::new("walk_slow_b"),
+        Hash40::new("walk_middle"),
+        Hash40::new("walk_middle_b"),
+        Hash40::new("walk_fast"),
+        Hash40::new("walk_fast_b")]){
+            TILT = false;
+            ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), true);
+            ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), false);
+        }
 
     //Aerials
     // if MotionModule::motion_kind(fighter.module_accessor) != hash40("attack_air_f") {

@@ -47,8 +47,8 @@ unsafe extern "C" fn shulk_attack_s3_hi_game(fighter: &mut L2CAgentBase) {
     frame(lua_state, 12.0);
     if is_excute(fighter) {
         FT_MOTION_RATE(fighter, 3.0/(16.2-12.0));
-        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), false);
-        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), true);
+        // ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), false);
+        // ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), true);
         PLAY_SE(fighter, Hash40::new("se_shulk_attackhard_s01"));
         ATTACK(fighter, 0, 0, Hash40::new("hip"), 13.0, 361, 97, 0, 35, 3.5, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
         ATTACK(fighter, 1, 0, Hash40::new("shoulderr"), 13.0, 361, 97, 0, 35, 2.75, 1.5, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
@@ -81,8 +81,8 @@ unsafe extern "C" fn shulk_attack_s3_hi_game(fighter: &mut L2CAgentBase) {
     if is_excute(fighter) {
         FT_MOTION_RATE(fighter, 1.0);
     }
-    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), true);
-    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), false);
+    // ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), true);
+    // ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), false);
 
 }
 
@@ -101,8 +101,8 @@ unsafe extern "C" fn shulk_attack_s3_s_game(fighter: &mut L2CAgentBase) {
     frame(lua_state, 12.0);
     if is_excute(fighter) {
         FT_MOTION_RATE(fighter, 3.0/(16.2-12.0));
-        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), false);
-        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), true);
+        // ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), false);
+        // ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), true);
         ATTACK(fighter, 0, 0, Hash40::new("hip"), 13.0, 361, 97, 0, 35, 3.5, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
         ATTACK(fighter, 1, 0, Hash40::new("shoulderr"), 13.0, 361, 97, 0, 35, 2.75, 1.5, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
         ATTACK(fighter, 2, 0, Hash40::new("swordr"), 15.0, 361, 97, 0, 35, 4.0, 0.0, 1.0, 0.0, None, None, None, 1.1, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
@@ -123,8 +123,8 @@ unsafe extern "C" fn shulk_attack_s3_s_game(fighter: &mut L2CAgentBase) {
     if is_excute(fighter) {
         FT_MOTION_RATE(fighter, 1.0);
     }
-    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), true);
-    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), false);
+    // ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), true);
+    // ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), false);
 }
 
 unsafe extern "C" fn shulk_attack_s3_lw_game(fighter: &mut L2CAgentBase) {
@@ -166,8 +166,8 @@ unsafe extern "C" fn shulk_attack_s3_lw_game(fighter: &mut L2CAgentBase) {
     if is_excute(fighter) {
         //bleh
         FT_MOTION_RATE(fighter, 3.0/(16.2-12.0));
-        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), false);
-        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), true);
+        // ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), false);
+        // ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), true);
         PLAY_SE(fighter, Hash40::new("se_shulk_attackhard_s01"));
         ATTACK(fighter, 0, 0, Hash40::new("hip"), 13.0, 361, 97, 0, 35, 3.5, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
         ATTACK(fighter, 1, 0, Hash40::new("shoulderr"), 13.0, 361, 97, 0, 35, 2.75, 1.5, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
@@ -200,8 +200,8 @@ unsafe extern "C" fn shulk_attack_s3_lw_game(fighter: &mut L2CAgentBase) {
     if is_excute(fighter) {
         FT_MOTION_RATE(fighter, 1.0);
     }
-    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), true);
-    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), false);
+    // ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadbehind"), true);
+    // ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("monadhand"), false);
 
 }
 
