@@ -1,12 +1,7 @@
 
 use super::*;
-use skyline::nn::ro::LookupSymbol;
-use skyline::hooks::{Region,getRegionAddress};
-use skyline::libc::*;
 
-static mut NOTIFY_LOG_EVENT_COLLISION_HIT_OFFSET : usize = 0x67A20;
 const SHULK_TILTS_HIT : i32 = 0x200000ee;
-const UNAVAILABLE_REDUCTION_FACTOR: f32 = 0.2;
 
 //Sword bone might be scaled to 0, do check
 unsafe extern "C" fn shulk_attack_s3_hi_game(fighter: &mut L2CAgentBase) {

@@ -1,12 +1,7 @@
 
 use super::*;
-use skyline::nn::ro::LookupSymbol;
-use skyline::hooks::{Region,getRegionAddress};
-use skyline::libc::*;
 
-static mut NOTIFY_LOG_EVENT_COLLISION_HIT_OFFSET : usize = 0x67A20;
 const SHULK_GROUND_HIT : i32 = 0x200000eb;
-const UNAVAILABLE_REDUCTION_FACTOR: f32 = 0.2;
 
 unsafe extern "C" fn shulk_attack_11_game(fighter: &mut L2CAgentBase) {
     let lua_state = fighter.lua_state_agent;
@@ -114,44 +109,6 @@ unsafe extern "C" fn shulk_attack_dash_game(fighter: &mut L2CAgentBase) {
     }
     
 }
-
-//Hit detection stuff
-// #[skyline::hook(offset = NOTIFY_LOG_EVENT_COLLISION_HIT_OFFSET)]
-// pub unsafe fn notify_log_event_collision_hit_replace(fighter_manager: *mut smash::app::FighterManager, attacker_id: u32, defender_id: u32, move_type: f32, arg5: i32, move_type_again: bool, fighter: &mut L2CAgentBase) -> u64 {
-//     let attacker_boma = sv_battle_object::module_accessor(attacker_id);
-//     let defender_boma = sv_battle_object::module_accessor(defender_id);
-//     let attacker_kind = sv_battle_object::kind(attacker_id);
-//     let defender_kind = sv_battle_object::kind(defender_id);
-//     let attacker = utils::util::get_battle_object_from_accessor(attacker_boma);
-//     // if search_hit flag is on
-//     if WorkModule::is_flag(attacker_boma, SHULK_GROUND_HIT) {
-//         let jump_unavailable = WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_JUMP);
-//         let speed_unavailable = WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SPEED);
-//         let shield_unavailable = WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SHIELD);
-//         let buster_unavailable = WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_BUSTER);
-//         let smash_unavailable = WorkModule::get_int(attacker_boma, *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SMASH);
-//         if(jump_unavailable != 0){
-//             WorkModule::set_int(attacker_boma, get_post_collision_unavailable_frames(jump_unavailable),*FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_JUMP);
-//         }
-//         if(speed_unavailable != 0){
-//             WorkModule::set_int(attacker_boma,  get_post_collision_unavailable_frames(speed_unavailable), *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SPEED);
-//         }
-//         if(shield_unavailable != 0){
-//             WorkModule::set_int(attacker_boma, get_post_collision_unavailable_frames(shield_unavailable), *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SHIELD);
-//         }
-//         if(buster_unavailable != 0){
-//             WorkModule::set_int(attacker_boma, get_post_collision_unavailable_frames(buster_unavailable), *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_BUSTER);
-//         }
-//         if(smash_unavailable != 0){
-//             WorkModule::set_int(attacker_boma, get_post_collision_unavailable_frames(smash_unavailable), *FIGHTER_SHULK_INSTANCE_WORK_ID_INT_SPECIAL_N_UNAVAILABLE_FRAME_SMASH);
-//         }
-//         // disable flag
-//         WorkModule::off_flag(attacker_boma, SHULK_GROUND_HIT);
-//     }
-    
-//     original!()(fighter_manager, attacker_id, defender_id, move_type, arg5, move_type_again, fighter)
-// }
-
 
 pub fn install() {
     smashline::Agent::new("shulk")
